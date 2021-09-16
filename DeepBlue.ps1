@@ -537,18 +537,17 @@ function Main {
                  }
              }
         }
-		ElseIf ($logname -eq "WMI-Activity"){
-            # Check command lines
+	ElseIf ($logname -eq "WMI-Activity"){
+        # Check commandlines for suspicious commands
             if ($event.id -eq 5861){
-				if($event.Message -match ".*CommandLineTemplate\s=\s(.*?);"){	
-                  $command = $event.message
-				  $obj.Message = "Suspicous WMI Event Filter"
-				  $obj.Results += "Event Triggered Execution: WMI - T1546.003`n"
-                  $obj.Results += $event.message
-				  $obj.Command=$matches[0].Split("=")[1]
-				  Write-Output $obj
-				  
-			    }
+	        if($event.Message -match ".*CommandLineTemplate\s=\s(.*?);"){	
+                    $command = $event.message
+                    $obj.Message = "Suspicous WMI Event Filter"
+	            $obj.Results += "Event Triggered Execution: WMI - T1546.003`n"
+                    $obj.Results += $event.message
+	            $obj.Command=$matches[0].Split("=")[1]
+	            Write-Output $obj	  
+	        }
             }
         }
     }
